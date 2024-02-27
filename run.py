@@ -201,8 +201,8 @@ for run in range(1+offset, runs + 1):
                     elif variant == "sarcastic":
                         if sentiment in negative_sentiments:
                             prompt += f"""
-                            Additionally, the review should be sarcastic.
-                            """
+                        Additionally, the review should be sarcastic.
+                        """
                         else:
                             break
 
