@@ -1,7 +1,6 @@
 import os
 import json
 from datetime import datetime
-import subprocess
 import textwrap
 from typing import Dict, List
 from faker import Faker
@@ -9,6 +8,13 @@ from faker import Faker
 import boto3
 from botocore.config import Config
 my_config = Config(region_name = 'us-east-2')
+
+####Output log settings
+output_basedir = "results/output/"
+error_basedir  = "results/perf/"
+log_basedir    = "results/log/"
+log_filename   = "run_" + datetime.now().strftime('%Y-%m-%d_%Hh%Mm')
+os.makedirs(os.path.dirname(log_basedir), exist_ok=True)
 
 #####STARDATES
 def gregorian_to_stardate(year, month, day):
@@ -79,17 +85,17 @@ max_output_tokens = "512"
 
 sentiments = [
     'strongly positive',
-    'mostly positive',
+    'moderately positive like a typical 4-star review',
     'slightly positive',
     'mixed but leans positive',
     'strongly negative',
-    'mostly negative',
+    'moderately negative like a typical 2-star review',
     'slightly negative',
     'mixed but leans negative',
 ]
 negative_sentiments = [
     'strongly negative',
-    'mostly negative',
+    'moderately negative like a typical 2-star review',
     'slightly negative',
     'mixed but leans negative',
 ]
@@ -97,36 +103,35 @@ negative_sentiments = [
 review_length = [
     '1',
     '2',
-    '3',
-    '10',
+    '4',
 ]
 
-variants = ['normal',
-            'typo',
-            'sarcastic']
+#FIXME: Add "Tone"
+negative_tones = [
+#Negs
+    'casual',
+    'professional',
+    'sarcastic',
+]
+
+positive_tones = [
+#Positives
+    'casual',
+    'professional',
+]
 
 personas = [
-    'a tech enthusiast',
+    'a techie',
     'a housewife',
     'a social media influencer',
-    'an asshole',
-    'a Silicon Valley tech bro',
-    'a professional corporate worker',
-    'a teenager'
+    'a corporate worker',
+    'a teenager',
+    'a grandma',
 ]
 
-
 temperature = 0.8
-runs = 3
-offset = 1 #default to zero for new experiments
-
-####Output log settings
-output_basedir = "results/output/"
-error_basedir  = "results/perf/"
-log_basedir    = "results/log/"
-log_filename   = "run_" + datetime.now().strftime('%Y-%m-%d_%Hh%Mm')
-os.makedirs(os.path.dirname(log_basedir), exist_ok=True)
-
+runs = 5
+offset = 0 #default to zero for new experiments
 
 #FIXME: Where do we put the trolling / exaggeration reviews?
 #NOTE:
@@ -166,7 +171,13 @@ for run in range(1+offset, runs + 1):
     for sentiment in sentiments:
         for num_sentences in review_length:
             for persona in personas:
-                for variant in variants:
+                
+                if sentiment in negative_sentiments:
+                    tones = negative_tones
+                else:
+                    tones = positive_tones
+
+                for tone in tones:
 
                     opener = ''
                     closer = ''
@@ -176,35 +187,9 @@ for run in range(1+offset, runs + 1):
                         The review sentiment must be {sentiment}.
                         The review must be {num_sentences} sentences long.
                         The review must be written from the perspective of {persona}.
+                        The tone of the review must be {tone}.
                         Answer in JSON format, where the first key is "product_name", and the second key is "review".
                         """
-
-                    if variant == "normal":
-                        pass
-                    if variant == "star trek":
-                        #NOTE: opener and closer can be used to expand "persona" prompting in the future
-                        opener = f"""
-                        «Command, we need you to plot a course through this
-                        turbulence and locate the source of the anomaly. Use all
-                        available data and your expertise to guide us through
-                        this challenging situation.»
-                        """
-                        closer = f"""
-                        Captain’s Log, Stardate {current_stardate}: We have
-                        successfully plotted a course through the turbulence
-                        and are now approaching the source of the anomaly.
-                        """
-                    elif variant == "typo":
-                        prompt += f"""
-                        Additionally, the review text should include a few common typographical errors.
-                        """
-                    elif variant == "sarcastic":
-                        if sentiment in negative_sentiments:
-                            prompt += f"""
-                        Additionally, the review should be sarcastic.
-                        """
-                        else:
-                            break
 
                     prompt += f"""
                         Do not include any other extra information beyond that.
@@ -224,7 +209,7 @@ for run in range(1+offset, runs + 1):
                     stdout.append(f"Sentiment: {sentiment}")
                     stdout.append(f"Sentences: {num_sentences}")
                     stdout.append(f"Persona: {persona}")
-                    stdout.append(f"Variant: {variant}")
+                    stdout.append(f"Tone: {tone}")
                     
                     print(stdout[0])
                     print(stdout[1])
@@ -236,75 +221,70 @@ for run in range(1+offset, runs + 1):
                     print(stdout[7])
                     print(stdout[8])
 
-                    should_execute = True
-                    if persona == 'an asshole' and sentiment not in negative_sentiments:
-                        should_execute = False
+                    if model_family == "llama-2":
+                        payload = {
+                            "inputs": [[{"role": "user", "content": prompt}]], 
+                            "parameters": {"max_new_tokens": int(max_output_tokens), "top_p": 0.9, "temperature": float(temperature)}
+                        }
+                    elif model_family == "mistral":
+                        instructions = [{"role": "user", "content": prompt}]
+                        prompt = format_instructions(instructions)
+                        payload = {
+                            "inputs": prompt, 
+                            "parameters": {"max_new_tokens": int(max_output_tokens), "top_p": 0.9, "temperature": float(temperature)}
+                        }                                
+                    else:
+                        print("Invalid LLM family given!")
+                        exit()
 
-                    if should_execute:
-                        if model_family == "llama-2":
-                            payload = {
-                                "inputs": [[{"role": "user", "content": prompt}]], 
-                                "parameters": {"max_new_tokens": int(max_output_tokens), "top_p": 0.9, "temperature": float(temperature)}
-                            }
-                        elif model_family == "mistral":
-                            instructions = [{"role": "user", "content": prompt}]
-                            prompt = format_instructions(instructions)
-                            payload = {
-                                "inputs": prompt, 
-                                "parameters": {"max_new_tokens": int(max_output_tokens), "top_p": 0.9, "temperature": float(temperature)}
-                            }                                
-                        else:
-                            print("Invalid LLM family given!")
-                            exit()
+                    result = query_endpoint(payload)[0]
 
-                        result = query_endpoint(payload)[0]
+                    if model_family == "llama-2":
+                        answer = f"{result['generation']['content']}"
+                    elif model_family == "mistral":
+                        answer = f"{result['generated_text']}"
+                    
+                    # senti_folder = sentiment.replace(" ", "_")
+                    # variant_folder = variant.replace(" ", "_")
+                    # persona_folder = persona.replace(" ", "_")
+                    # sentence_folder = "s" + str(num_sentences)
+                    # output_dir = output_basedir + model + "/" + senti_folder + "/" + sentence_folder + "/" + persona_folder + "/" + variant_folder + "/"
+                    # error_dir  = error_basedir + model + "/" + senti_folder + "/" + sentence_folder + "/" + persona_folder + "/" + variant_folder + "/"
+                    # out_file =  f"run{str(run)}.txt"
 
-                        if model_family == "llama-2":
-                            answer = f"{result['generation']['content']}"
-                        elif model_family == "mistral":
-                            answer = f"{result['generated_text']}"
-                        
-                        # senti_folder = sentiment.replace(" ", "_")
-                        # variant_folder = variant.replace(" ", "_")
-                        # persona_folder = persona.replace(" ", "_")
-                        # sentence_folder = "s" + str(num_sentences)
-                        # output_dir = output_basedir + model + "/" + senti_folder + "/" + sentence_folder + "/" + persona_folder + "/" + variant_folder + "/"
-                        # error_dir  = error_basedir + model + "/" + senti_folder + "/" + sentence_folder + "/" + persona_folder + "/" + variant_folder + "/"
-                        # out_file =  f"run{str(run)}.txt"
+                    output_dir = output_basedir + model + "/"
+                    error_dir  = error_basedir + model + "/"
+                    os.makedirs(os.path.dirname(output_dir), exist_ok=True)        
+                    os.makedirs(os.path.dirname(error_dir), exist_ok=True)        
 
-                        output_dir = output_basedir + model + "/"
-                        error_dir  = error_basedir + model + "/"
-                        os.makedirs(os.path.dirname(output_dir), exist_ok=True)        
-                        os.makedirs(os.path.dirname(error_dir), exist_ok=True)        
+                    senti_path   = sentiment.replace(" ", "-")
+                    persona_path = persona.replace(" ", "-")
+                    tone_path = tone.replace(" ", "-")
+                    out_file = f"{senti_path}_{persona_path}_{tone_path}_s{str(num_sentences)}_run{str(run)}.txt" 
 
-                        senti_path   = sentiment.replace(" ", "-")
-                        persona_path = persona.replace(" ", "-")
-                        variant_path = variant.replace(" ", "-")
-                        out_file = f"{senti_path}_{persona_path}_{variant_path}_s{str(num_sentences)}_run{str(run)}.txt" 
+                    with open(output_dir+out_file, "w", encoding="utf-8") as stdout_file:
+                        stdout_file.write("Prompt:" + "\n")
+                        stdout_file.write(prompt + "\n")
+                        stdout_file.write("Response:" + "\n")
+                        stdout_file.write(answer + "\n")
 
-                        with open(output_dir+out_file, "w", encoding="utf-8") as stdout_file:
-                            stdout_file.write("Prompt:" + "\n")
-                            stdout_file.write(prompt + "\n")
-                            stdout_file.write("Response:" + "\n")
-                            stdout_file.write(answer + "\n")
-
-                        stdout.append("Done!")
-                        stdout.append("-------------------")
-                        print(stdout[9])
-                        print(stdout[10])
+                    stdout.append("Done!")
+                    stdout.append("-------------------")
+                    print(stdout[9])
+                    print(stdout[10])
 
 
-                        with open(log_basedir+log_filename, "a", encoding="utf-8") as log_file:
-                            log_file.write(stdout[0] + "\n")
-                            log_file.write(stdout[1] + "\n")
-                            log_file.write(stdout[2] + "\n")
-                            log_file.write(stdout[3] + "\n")
-                            log_file.write(stdout[4] + "\n")
-                            log_file.write(stdout[5] + "\n")
-                            log_file.write(stdout[6] + "\n")
-                            log_file.write(stdout[7] + "\n")
-                            log_file.write(stdout[8] + "\n")
-                            log_file.write(stdout[9] + "\n")
-                            log_file.write(stdout[10] + "\n")
+                    with open(log_basedir+log_filename, "a", encoding="utf-8") as log_file:
+                        log_file.write(stdout[0] + "\n")
+                        log_file.write(stdout[1] + "\n")
+                        log_file.write(stdout[2] + "\n")
+                        log_file.write(stdout[3] + "\n")
+                        log_file.write(stdout[4] + "\n")
+                        log_file.write(stdout[5] + "\n")
+                        log_file.write(stdout[6] + "\n")
+                        log_file.write(stdout[7] + "\n")
+                        log_file.write(stdout[8] + "\n")
+                        log_file.write(stdout[9] + "\n")
+                        log_file.write(stdout[10] + "\n")
 
 print("Done!")
