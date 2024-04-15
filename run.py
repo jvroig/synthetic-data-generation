@@ -1,13 +1,17 @@
 import os
+import sys
 import json
 from datetime import datetime
 import textwrap
 from typing import Dict, List
 from faker import Faker
 
-import boto3
-from botocore.config import Config
-my_config = Config(region_name = 'us-east-2')
+
+
+if len(sys.argv) > 1:
+    platform = sys.argv[1].lower()
+else:
+    platform = "sagemaker"
 
 ####Output log settings
 output_basedir = "results/output/"
@@ -39,41 +43,75 @@ def get_current_stardate():
 current_stardate = get_current_stardate()
 
 
-def query_endpoint(payload):
-    client = boto3.client("sagemaker-runtime", config=my_config)
-    response = client.invoke_endpoint(
-        EndpointName=endpoint_name,
-        ContentType="application/json",
-        Body=json.dumps(payload).encode("utf-8"),
-        CustomAttributes="accept_eula=true",
+###SAGEMAKER PLATFORM ONLY #####
+if platform == "sagemaker":
+    model_family = "mistral"
+    model = "Mixtral-8x7b-instruct"
+    endpoint_name = "jumpstart-dft-hf-llm-mixtral-8x7b-instruct"
+
+    import boto3
+    from botocore.config import Config
+    my_config = Config(region_name = 'us-east-2')
+
+
+    def query_endpoint(payload):
+        client = boto3.client("sagemaker-runtime", config=my_config)
+        response = client.invoke_endpoint(
+            EndpointName=endpoint_name,
+            ContentType="application/json",
+            Body=json.dumps(payload).encode("utf-8"),
+            CustomAttributes="accept_eula=true",
+        )
+        response = response["Body"].read().decode("utf8")
+        response = json.loads(response)
+        return response
+
+    def format_instructions(instructions: List[Dict[str, str]]) -> List[str]:
+        """Format instructions where conversation roles must alternate user/assistant/user/assistant/..."""
+        prompt: List[str] = []
+        for user, answer in zip(instructions[::2], instructions[1::2]):
+            prompt.extend(["<s>", "[INST] ", (user["content"]).strip(), " [/INST] ", (answer["content"]).strip(), "</s>"])
+        prompt.extend(["<s>", "[INST] ", (instructions[-1]["content"]).strip(), " [/INST] "])
+        return "".join(prompt)
+
+if platform == "llamacpp-server":
+    host = "18.218.148.92"
+    port = "8080"
+    model = "mixtral-8x7b-instruct-q4_K"
+
+    import openai
+
+    client = openai.OpenAI(
+        base_url=f"http://{host}:{port}",
+        api_key = "sk-no-key-required"
     )
-    response = response["Body"].read().decode("utf8")
-    response = json.loads(response)
-    return response
 
-def query_mixtral(payload):
-    client = boto3.client("runtime.sagemaker")
-    response = client.invoke_endpoint(
-        EndpointName=endpoint_name, 
-        ContentType="application/json", 
-        Body=json.dumps(payload).encode("utf-8")
-    )
-    response = response["Body"].read().decode("utf8")
-    response = json.loads(response)
-    return response
+    def query_endpoint(payload):
+        prompt = payload['prompt']
+        temperature = payload['temperature']
+        max_output_tokens = payload['max_output_tokens']
 
-def format_instructions(instructions: List[Dict[str, str]]) -> List[str]:
-    """Format instructions where conversation roles must alternate user/assistant/user/assistant/..."""
-    prompt: List[str] = []
-    for user, answer in zip(instructions[::2], instructions[1::2]):
-        prompt.extend(["<s>", "[INST] ", (user["content"]).strip(), " [/INST] ", (answer["content"]).strip(), "</s>"])
-    prompt.extend(["<s>", "[INST] ", (instructions[-1]["content"]).strip(), " [/INST] "])
-    return "".join(prompt)
+        # messages = [
+        #     {"role": "user", "content": f"[INST]{prompt}[/INST]"}
+        # ]
+        messages = [
+            {"role": "user", "content": prompt}
+        ]
 
+        # print(messages)
+        response = client.chat.completions.create(
+            model=model,
+            messages=messages,
+            temperature=0.2,  # this is the degree of randomness of the model's output
+        )
 
+        # Just to make this similar to the return structure of query_endpoint in sagemaker platform
+        data = {0: response.choices[0].message.content}
+        return data
+
+    
 
 ####Settings
-max_input_tokens  = "512"
 max_output_tokens = "512"
 
 # sentiments = ['strongly positive',
@@ -131,7 +169,7 @@ personas = [
 
 temperature = 0.8
 runs = 5
-offset = 0 #default to zero for new experiments
+offset = 1 #default to zero for new experiments
 
 #FIXME: Where do we put the trolling / exaggeration reviews?
 #NOTE:
@@ -139,14 +177,6 @@ offset = 0 #default to zero for new experiments
 #   local post-processing of `normal` output:
 #       - 'no punctuation wall of text',
 #       - 'super mad all caps'
-
-####Sagemaker
-#model_family = "llama-2"
-#model = "Llama-2-70B-chat"
-#endpoint_name = "jumpstart-dft-meta-textgeneration-llama-2-70b-f"
-model_family = "mistral"
-model = "Mixtral-8x7b-instruct"
-endpoint_name = "jumpstart-dft-hf-llm-mixtral-8x7b-instruct"
 
 ####Experiment proper
 products = [
@@ -221,29 +251,42 @@ for run in range(1+offset, runs + 1):
                     print(stdout[7])
                     print(stdout[8])
 
-                    if model_family == "llama-2":
+                    if platform == "sagemaker":
+                        if model_family == "llama-2":
+                            payload = {
+                                "inputs": [[{"role": "user", "content": prompt}]], 
+                                "parameters": {"max_new_tokens": int(max_output_tokens), "top_p": 0.9, "temperature": float(temperature)}
+                            }
+                        elif model_family == "mistral":
+                            instructions = [{"role": "user", "content": prompt}]
+                            prompt = format_instructions(instructions)
+                            payload = {
+                                "inputs": prompt, 
+                                "parameters": {"max_new_tokens": int(max_output_tokens), "top_p": 0.9, "temperature": float(temperature)}
+                            }                                
+                        else:
+                            print("Invalid LLM family given!")
+                            exit()
+                    elif platform == "llamacpp-server":
                         payload = {
-                            "inputs": [[{"role": "user", "content": prompt}]], 
-                            "parameters": {"max_new_tokens": int(max_output_tokens), "top_p": 0.9, "temperature": float(temperature)}
+                            'prompt': prompt,
+                            'temperature': temperature,
+                            'max_output_tokens': max_output_tokens,
                         }
-                    elif model_family == "mistral":
-                        instructions = [{"role": "user", "content": prompt}]
-                        prompt = format_instructions(instructions)
-                        payload = {
-                            "inputs": prompt, 
-                            "parameters": {"max_new_tokens": int(max_output_tokens), "top_p": 0.9, "temperature": float(temperature)}
-                        }                                
                     else:
-                        print("Invalid LLM family given!")
+                        print("Invalid LLM platform given!")
                         exit()
 
                     result = query_endpoint(payload)[0]
 
-                    if model_family == "llama-2":
-                        answer = f"{result['generation']['content']}"
-                    elif model_family == "mistral":
-                        answer = f"{result['generated_text']}"
-                    
+                    if platform == "sagemaker":
+                        if model_family == "llama-2":
+                            answer = f"{result['generation']['content']}"
+                        elif model_family == "mistral":
+                            answer = f"{result['generated_text']}"
+                    if platform == "llamacpp-server":
+                        answer = f"{result}"
+
                     # senti_folder = sentiment.replace(" ", "_")
                     # variant_folder = variant.replace(" ", "_")
                     # persona_folder = persona.replace(" ", "_")
