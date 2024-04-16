@@ -102,7 +102,8 @@ if platform == "llamacpp-server":
         response = client.chat.completions.create(
             model=model,
             messages=messages,
-            temperature=0.2,  # this is the degree of randomness of the model's output
+            temperature=temperature,
+            max_tokens=int(max_output_tokens),
         )
 
         # Just to make this similar to the return structure of query_endpoint in sagemaker platform

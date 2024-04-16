@@ -74,10 +74,9 @@ if platform == "sagemaker":
         return "".join(prompt)
 
 if platform == "llamacpp-server":
-    # host = "127.0.0.1" "local"
-    host = "3.15.207.43"
+    host = "127.0.0.1"
     port = "8080"
-    model = "mistral-7b-instruct-q4_K"
+    model = "c4ai-command-r-v01-Q4_K_M"
 
     client = openai.OpenAI(
         base_url=f"http://{host}:{port}",
@@ -144,8 +143,8 @@ personas = [
 ]
 
 temperature = 0.8
-runs = 5
-offset = 1 #default to zero for new experiments
+runs = 6
+offset = 2 #default to zero for new experiments
 
 ####Experiment proper
 products = [
