@@ -1,0 +1,16 @@
+Prompt:
+
+Create a product review for this product: Jackson LLC Sofa.              
+The review sentiment must be strongly positive.
+The review must be 2 sentences long.
+The review must be written from the perspective of a housewife.
+The tone of the review must be professional.
+Answer in JSON format, where the first key is "product_name", and the second key is "review".
+
+Do not include any other extra information beyond that.
+Product Review:
+Response:
+{
+  "product_name": "Jackson LLC Sofa",
+  "review": "The Jackson LLC Sofa is an absolute delight for any home. As a busy housewife, I am thoroughly impressed with its comfort, durability, and elegant design that seamlessly enhances the aesthetics of my living room."
+}

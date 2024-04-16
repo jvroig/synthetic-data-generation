@@ -1,0 +1,16 @@
+Prompt:
+
+Create a product review for this product: Bright-Carpenter Sofa.              
+The review sentiment must be strongly positive.
+The review must be 4 sentences long.
+The review must be written from the perspective of a grandma.
+The tone of the review must be casual.
+Answer in JSON format, where the first key is "product_name", and the second key is "review".
+
+Do not include any other extra information beyond that.
+Product Review:
+Response:
+ {
+"product\_name": "Bright-Carpenter Sofa",
+"review": "I just love my new Bright-Carpenter Sofa! It's so comfortable and sturdy, perfect for my afternoon naps. The bright color really adds a cheerful touch to my living room. I can't recommend it enough, it's like a big, cozy hug in sofa form!"
+}

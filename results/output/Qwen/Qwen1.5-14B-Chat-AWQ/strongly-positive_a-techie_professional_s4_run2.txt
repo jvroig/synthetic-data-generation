@@ -1,0 +1,18 @@
+Prompt:
+
+Create a product review for this product: Jackson LLC Sofa.              
+The review sentiment must be strongly positive.
+The review must be 4 sentences long.
+The review must be written from the perspective of a techie.
+The tone of the review must be professional.
+Answer in JSON format, where the first key is "product_name", and the second key is "review".
+
+Do not include any other extra information beyond that.
+Product Review:
+Response:
+{
+  "product_name": "Jackson LLC Sofa",
+  "review": {
+    "As a tech-savvy individual, I was pleasantly surprised by the Jackson LLC Sofa's seamless integration of smart home features. The sleek design not only impressed my modern aesthetic, but also the comfort level exceeded my expectations. The use of high-quality materials and thoughtful ergonomics made this sofa a standout in both style and functionality. I would highly recommend it to anyone looking for a tech-forward piece of furniture that combines form and comfort."
+  }
+}

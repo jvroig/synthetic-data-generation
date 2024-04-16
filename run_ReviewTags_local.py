@@ -10,7 +10,7 @@ import openai
 if len(sys.argv) > 1:
     platform = sys.argv[1].lower()
 else:
-    platform = "llamacpp-server"
+    platform = "openai-compatible"
 
 ####Output log settings
 output_basedir = "results/output/"
@@ -73,7 +73,7 @@ if platform == "sagemaker":
         prompt.extend(["<s>", "[INST] ", (instructions[-1]["content"]).strip(), " [/INST] "])
         return "".join(prompt)
 
-if platform == "llamacpp-server":
+if platform == "openai-compatible":
     host = "127.0.0.1"
     port = "8080"
     model = "c4ai-command-r-v01-Q4_K_M"
@@ -237,7 +237,7 @@ for run in range(1+offset, runs + 1):
                     else:
                         print("Invalid LLM family given!")
                         exit()
-                elif platform == "llamacpp-server":
+                elif platform == "openai-compatible":
                     payload = {
                         'prompt': prompt,
                         'temperature': temperature,
@@ -254,7 +254,7 @@ for run in range(1+offset, runs + 1):
                         answer = f"{result['generation']['content']}"
                     elif model_family == "mistral":
                         answer = f"{result['generated_text']}"
-                if platform == "llamacpp-server":
+                if platform == "openai-compatible":
                     answer = f"{result}"
 
                 # senti_folder = sentiment.replace(" ", "_")

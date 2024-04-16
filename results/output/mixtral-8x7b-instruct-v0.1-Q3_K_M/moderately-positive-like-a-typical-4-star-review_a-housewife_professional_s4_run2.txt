@@ -1,0 +1,16 @@
+Prompt:
+
+Create a product review for this product: Bright-Carpenter Sofa.              
+The review sentiment must be moderately positive like a typical 4-star review.
+The review must be 4 sentences long.
+The review must be written from the perspective of a housewife.
+The tone of the review must be professional.
+Answer in JSON format, where the first key is "product_name", and the second key is "review".
+
+Do not include any other extra information beyond that.
+Product Review:
+Response:
+ {
+"product\_name": "Bright-Carpenter Sofa",
+"review": "The Bright-Carpenter Sofa is a well-crafted and stylish addition to our living room. Its sturdy construction and comfortable cushions make it a practical choice for daily use. The bright color adds a cheerful touch to our home decor. I am highly satisfied with this purchase and would recommend it to other housewives looking for a quality sofa."
+}

@@ -11,7 +11,7 @@ from faker import Faker
 if len(sys.argv) > 1:
     platform = sys.argv[1].lower()
 else:
-    platform = "sagemaker"
+    platform = "openai-compatible"
 
 ####Output log settings
 output_basedir = "results/output/"
@@ -74,15 +74,16 @@ if platform == "sagemaker":
         prompt.extend(["<s>", "[INST] ", (instructions[-1]["content"]).strip(), " [/INST] "])
         return "".join(prompt)
 
-if platform == "llamacpp-server":
-    host = "18.218.148.92"
+if platform == "openai-compatible":
+    host = "3.139.60.118"
     port = "8080"
-    model = "mixtral-8x7b-instruct-q4_K"
+    api_string = "/v1"  #For vllm, this needs to be "/v1", but for llamacpp-server, this should be blank 
+    model = "mixtral-8x7b-instruct-v0.1-Q3_K_M"
 
     import openai
 
     client = openai.OpenAI(
-        base_url=f"http://{host}:{port}",
+        base_url=f"http://{host}:{port}{api_string}",
         api_key = "sk-no-key-required"
     )
 
@@ -268,7 +269,7 @@ for run in range(1+offset, runs + 1):
                         else:
                             print("Invalid LLM family given!")
                             exit()
-                    elif platform == "llamacpp-server":
+                    elif platform == "openai-compatible":
                         payload = {
                             'prompt': prompt,
                             'temperature': temperature,
@@ -285,7 +286,7 @@ for run in range(1+offset, runs + 1):
                             answer = f"{result['generation']['content']}"
                         elif model_family == "mistral":
                             answer = f"{result['generated_text']}"
-                    if platform == "llamacpp-server":
+                    if platform == "openai-compatible":
                         answer = f"{result}"
 
                     # senti_folder = sentiment.replace(" ", "_")

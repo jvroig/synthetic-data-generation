@@ -1,0 +1,16 @@
+Prompt:
+
+Create a product review for this product: Bright-Carpenter Sofa.              
+The review sentiment must be slightly positive.
+The review must be 1 sentences long.
+The review must be written from the perspective of a techie.
+The tone of the review must be casual.
+Answer in JSON format, where the first key is "product_name", and the second key is "review".
+
+Do not include any other extra information beyond that.
+Product Review:
+Response:
+ {
+"product\_name": "Bright-Carpenter Sofa",
+"review": "The Bright-Carpenter Sofa has a sleek, modern design that's perfect for any tech-savvy home - and it's super comfy for those long coding sessions!"
+}
