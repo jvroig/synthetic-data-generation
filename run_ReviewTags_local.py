@@ -79,7 +79,7 @@ if platform == "openai-compatible":
     model = "c4ai-command-r-v01-Q4_K_M"
 
     client = openai.OpenAI(
-        base_url=f"http://{host}:{port}",
+        base_url=f"http://{host}:{port}/v1",
         api_key = "sk-no-key-required"
     )
 

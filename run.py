@@ -77,13 +77,12 @@ if platform == "sagemaker":
 if platform == "openai-compatible":
     host = "3.139.60.118"
     port = "8080"
-    api_string = "/v1"  #For vllm, this needs to be "/v1", but for llamacpp-server, this should be blank 
     model = "mixtral-8x7b-instruct-v0.1-Q3_K_M"
 
     import openai
 
     client = openai.OpenAI(
-        base_url=f"http://{host}:{port}{api_string}",
+        base_url=f"http://{host}:{port}/v1",
         api_key = "sk-no-key-required"
     )
 

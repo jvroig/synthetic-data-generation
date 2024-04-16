@@ -10,7 +10,7 @@ import openai
 if len(sys.argv) > 1:
     platform = sys.argv[1].lower()
 else:
-    platform = "llamacpp-server"
+    platform = "openai-compatible"
 
 ####Output log settings
 output_basedir = "results/output/"
@@ -73,14 +73,13 @@ if platform == "sagemaker":
         prompt.extend(["<s>", "[INST] ", (instructions[-1]["content"]).strip(), " [/INST] "])
         return "".join(prompt)
 
-if platform == "llamacpp-server":
-    # host = "127.0.0.1" "local"
+if platform == "openai-compatible":
     host = "3.15.207.43"
     port = "8080"
     model = "mistral-7b-instruct-q4_K"
 
     client = openai.OpenAI(
-        base_url=f"http://{host}:{port}",
+        base_url=f"http://{host}:{port}/v1",
         api_key = "sk-no-key-required"
     )
 
@@ -107,7 +106,6 @@ if platform == "llamacpp-server":
         # Just to make this similar to the return structure of query_endpoint in sagemaker platform
         data = {0: response.choices[0].message.content}
         return data
-
     
 
 ####Settings
@@ -238,7 +236,7 @@ for run in range(1+offset, runs + 1):
                     else:
                         print("Invalid LLM family given!")
                         exit()
-                elif platform == "llamacpp-server":
+                elif platform == "openai-compatible":
                     payload = {
                         'prompt': prompt,
                         'temperature': temperature,
@@ -255,7 +253,7 @@ for run in range(1+offset, runs + 1):
                         answer = f"{result['generation']['content']}"
                     elif model_family == "mistral":
                         answer = f"{result['generated_text']}"
-                if platform == "llamacpp-server":
+                if platform == "openai-compatible":
                     answer = f"{result}"
 
                 # senti_folder = sentiment.replace(" ", "_")
