@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Screwdriver.
+The review must be written from the perspective of a teenager.
+The review should focus on: performance.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name": "Screwdriver",
+"review": "This screwdriver was a total letdown. It couldn't even handle simple tasks without slipping. The grip is uncomfortable and my hand kept hurting after using it for a while.",
+"tags": ["Performance", "Quality"]
+
+"product_name": "Screwdriver",
+"review": "I've had better experiences. The screwdriver feels flimsy and cheap. It doesn't turn screws smoothly, ruining the material I'm working on.",
+"tags": ["Performance", "Quality"]
+
+"product_name": "Screwdriver",
+"review": "I was disappointed with how poorly this screwdriver performed. The handle is too small, making it hard to use. It struggles to turn screws, especially the ones that are tightly fastened.",
+"tags": ["Performance", "Design"]
+
+"product_name": "Screwdriver",
+"review": "I love this screwdriver! It feels sturdy and strong in my hand. The grip is perfect, making it easy to use for extended periods. It turns screws effortlessly, saving me so much time.",
+"tags": ["Performance", "Quality"]
+
+"product_name": "Screwdriver",
+"review": "This screwdriver exceeded my expectations. It's comfortable to hold and easy to maneuver. The performance is impressive - it turns screws swiftly and accurately.",
+"tags": ["Performance", "Design"]
+
+"product_name": "Screwdriver",
+"review": "I'm really satisfied with this screwdriver. It's well-built and performs exceptionally well. The design is thoughtful, with a non-slip grip that ensures a steady hand.",
+"tags": ["Performance", "Quality", "Design"]

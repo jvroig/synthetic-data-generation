@@ -74,13 +74,14 @@ if platform == "sagemaker":
         return "".join(prompt)
 
 if platform == "openai-compatible":
-    host = "3.15.207.43"
+    host = "13.58.43.140"
     port = "8080"
-    model = "mistral-7b-instruct-q4_K"
+    model = "mixtral-8x7b-instruct-v0.1-Q3_K_M.gguf"
 
     client = openai.OpenAI(
         base_url=f"http://{host}:{port}/v1",
-        api_key = "sk-no-key-required"
+        api_key = "DEBORAH-is-the-key",
+        timeout=30,
     )
 
     def query_endpoint(payload):
@@ -157,6 +158,11 @@ products = [
     'Queen-Sized Bed',
     'Coffee Table',
     'Laptop',
+    'Coffee Maker',
+    'Fitness Tracker',
+    'Wireless Headphones',
+    'LED Strip Lights',
+    'Power Tool Kit',
 ]
 
 for run in range(1+offset, runs + 1):
@@ -168,7 +174,7 @@ for run in range(1+offset, runs + 1):
             for persona in personas:
                 prompt = f"""
                 ### INSTRUCTIONS ###
-                You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+                You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review focuses on one more more of the following categories: quality, performance, value and design.
 
                 Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
 
@@ -193,6 +199,9 @@ for run in range(1+offset, runs + 1):
                 
                 ### OUTPUT FORMAT ####
                 Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+                ### EXAMPLE ####
+                Response:
                 """
 
                 prompt += f"""

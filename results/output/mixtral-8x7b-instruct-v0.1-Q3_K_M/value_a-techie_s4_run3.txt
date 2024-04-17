@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Screwdriver.
+The review must be written from the perspective of a techie.
+The review should focus on: value.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name": "Screwdriver",
+"review": "I was surprised at the low cost of this screwdriver, but after using it, I realized you get what you pay for. The materials feel cheap and it doesn't perform as well as more expensive options. It's a disappointment considering its price point.",
+"tags": ["Value", "Performance", "Quality", "Negative"]
+
+"product_name": "Screwdriver",
+"review": "This screwdriver is a fantastic value. It's well-made, sturdy, and performs exceptionally well. I've used it on various tasks and it hasn't failed me yet. Highly recommend for the price.",
+"tags": ["Value", "Performance", "Quality", "Positive"]
+
+"product_name": "Screwdriver",
+"review": "I was skeptical about the price of this screwdriver, but it has proven to be a great value. It's durable and handles tasks smoothly. I've had it for a while now and it's still going strong.",
+"tags": ["Value", "Quality", "Performance", "Positive"]
+
+"product_name": "Screwdriver",
+"review": "This screwdriver is a total rip-off. It's flimsy and breaks easily, and the performance is subpar. I regret not investing in a better one.",
+"tags": ["Value", "Quality", "Performance", "Negative"]
+
+"product_name": "Screwdriver",
+"review": "Despite being cheap, this screwdriver doesn't offer good value. The build quality is poor and it doesn't last. I've had to replace it multiple times already.",
+"tags": ["Value", "Quality", "Negative"]
+
+"product_name": "Screwdriver",
+"review": "I'm impressed with the value of this screwdriver. It's affordable and delivers on performance. The build quality is decent for the price. A great choice for casual users.",
+"tags": ["Value", "Performance", "Quality", "Positive"]

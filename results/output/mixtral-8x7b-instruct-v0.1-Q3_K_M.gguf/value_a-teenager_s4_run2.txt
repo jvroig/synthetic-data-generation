@@ -1,0 +1,38 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Sofa.
+The review must be written from the perspective of a teenager.
+The review should focus on: value.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ {"product_name": "Sofa", "review": "I can't believe I convinced my parents to get this couch. It was on sale, but I still think it's a total rip-off. It's not comfortable at all and squeaks every time I sit down. I wish they'd spent a little more for something better.", "tags": ["Value", "Non-review"]}
+{"product_name": "Sofa", "review": "This sofa was such a steal! I got it for a great price and it's super comfy. The material feels nice and sturdy, perfect for hanging out with my friends. I'm so glad I didn't spend more on a different one.", "tags": ["Value", "Quality"]}
+{"product_name": "Sofa", "review": "I was skeptical about the value of this sofa, but it has really grown on me. It's not too expensive and is surprisingly comfortable. I can even use it as a makeshift bed when I have sleepovers. I'm really happy with my purchase.", "tags": ["Value", "Performance"]}
+{"product_name": "Sofa", "review": "I got this couch because it was cheap, but I regret it now. The cushions are too soft and it doesn't look very nice. I wouldn't recommend it to anyone, even if it was on sale.", "tags": ["Value", "Non-review"]}
+{"product_name": "Sofa", "review": "I was worried about the value of this sofa, but it turned out to be a great deal. It's well-built, stylish, and comfortable. It's perfect for lounging around and playing video games. I'm glad I didn't spend more on a different one.", "tags": ["Value", "Quality", "Performance", "Design"]}
+{"product_name": "Sofa", "review": "I didn't think this sofa was worth the price, but I was wrong. It's incredibly comfortable and has a unique, modern design. It's a great addition to my room and I don't mind paying a little extra for something that's well-made.", "tags": ["Value", "Performance", "Design"]}

@@ -83,7 +83,8 @@ if platform == "openai-compatible":
 
     client = openai.OpenAI(
         base_url=f"http://{host}:{port}/v1",
-        api_key = "sk-no-key-required"
+        api_key = "sk-no-key-required",
+        timeout=30,
     )
 
     def query_endpoint(payload):

@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Sofa.
+The review must be written from the perspective of a grandma.
+The review should focus on: design, value.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ product_name: Sofa
+review: "I bought this sofa for my grandkids' visits, but the design is not senior-friendly. The color is nice, though. I wish it had sturdier arms and a higher seat."
+tags: ["Design"]
+
+product_name: Sofa
+review: "This sofa is a steal! The price is unbeatable considering its quality and comfort."
+tags: ["Value"]
+
+product_name: Sofa
+review: "I love the vintage design of this sofa, it's perfect for my living room. It's a bit pricey but worth every penny."
+tags: ["Design", "Value"]
+
+product_name: Sofa
+review: "I was disappointed with the sofa's design. The cushions are too soft, making it uncomfortable for me."
+tags: ["Design"]
+
+product_name: Sofa
+review: "The sofa's value is great, it's comfortable and durable. I hope they consider making a senior-friendly design."
+tags: ["Value"]
+
+product_name: Sofa
+review: "I love the sofa's design, it's comfortable and stylish. The value is excellent, I don't think you can find a better deal."
+tags: ["Design", "Value"]

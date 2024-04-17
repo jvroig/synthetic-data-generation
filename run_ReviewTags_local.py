@@ -76,11 +76,12 @@ if platform == "sagemaker":
 if platform == "openai-compatible":
     host = "127.0.0.1"
     port = "8080"
-    model = "c4ai-command-r-v01-Q4_K_M"
+    model = "gemma-2b-it-q4-gguf"
 
     client = openai.OpenAI(
         base_url=f"http://{host}:{port}/v1",
-        api_key = "sk-no-key-required"
+        api_key = "sk-no-key-required",
+        timeout=30,
     )
 
     def query_endpoint(payload):
@@ -158,6 +159,11 @@ products = [
     'Queen-Sized Bed',
     'Coffee Table',
     'Laptop',
+    'Coffee Maker',
+    'Fitness Tracker',
+    'Wireless Headphones',
+    'LED Strip Lights',
+    'Power Tool Kit',
 ]
 
 for run in range(1+offset, runs + 1):
@@ -169,7 +175,7 @@ for run in range(1+offset, runs + 1):
             for persona in personas:
                 prompt = f"""
                 ### INSTRUCTIONS ###
-                You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+                You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review focuses on one more more of the following categories: quality, performance, value and design.
 
                 Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
 
@@ -185,6 +191,7 @@ for run in range(1+offset, runs + 1):
 
                 Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.\n
                 """
+
                 prompt += f"""
                 ### INPUT ####
                 Create three negative and three positive customer reviews for this product: {product}.
@@ -194,7 +201,41 @@ for run in range(1+offset, runs + 1):
                 
                 ### OUTPUT FORMAT ####
                 Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
-                """
+
+                ### EXAMPLE ####
+                Response:
+                [
+                    {
+                        "product_name": "Screwdriver",
+                        "review": "The craftsmanship of this screwdriver is seriously lacking - it feels flimsy and the handle is poorly designed, making it uncomfortable to use.",
+                        "tags": ["Quality"]
+                    },
+                    {
+                        "product_name": "Screwdriver",
+                        "review": "This is a great tool if you like wasting your money on junk. The head snapped off on the first use - avoid at all costs!",
+                        "tags": ["Quality"]
+                    },
+                    {
+                        "product_name": "Screwdriver",
+                        "review": "Not impressed with the build quality - it's just not robust enough for everyday use and the finish is poor.",
+                        "tags": ["Quality"]
+                    },
+                    {
+                        "product_name": "Screwdriver",
+                        "review": "This screwdriver is a game-changer! The precision and control are exceptional, making it a must-have for any DIY enthusiast.",
+                        "tags": ["Quality"]
+                    },
+                    {
+                        "product_name": "Screwdriver",
+                        "review": "The craftsmanship is evident in this high-quality tool. It's sturdy, well-balanced, and a joy to use - definitely recommended!",
+                        "tags": ["Quality"]
+                    },
+                    {
+                        "product_name": "Screwdriver",
+                        "review": "A solid choice for a reasonable price. The craftsmanship is impeccable and it comes with various attachments for different jobs - a real workhorse!",
+                        "tags": ["Quality", "Value"]
+                    }
+                ]"""
 
                 prompt += f"""
                 Do not include any other extra information beyond that.

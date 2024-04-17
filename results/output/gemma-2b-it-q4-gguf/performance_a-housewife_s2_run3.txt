@@ -1,0 +1,49 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Screwdriver.
+The review must be written from the perspective of a housewife.
+The review should focus on: performance.             
+Each review must be 2 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+{
+"product_name": "Screwdriver",
+"review": "It's amazing how quickly this screwdriver cuts through wood. It's so efficient and makes quick work of any project I have around the house.",
+"tags": ["performance"]
+}
+
+{
+"product_name": "Screwdriver",
+"review": "I'm not usually one for screwdrivers, but this one is different. It's sturdy, well-made, and I'm sure it will last for many years to come.",
+"tags": ["performance"]
+}
+
+{
+"product_name": "Screwdriver",
+"review": "I'm not sure how long I've had this screwdriver, but it's always performed well. It's the perfect size for projects around the house and it's always ready for whatever I need it for.",
+"tags": ["performance"]
+}

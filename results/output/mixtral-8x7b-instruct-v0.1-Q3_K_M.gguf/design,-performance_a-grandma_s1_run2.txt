@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Sofa.
+The review must be written from the perspective of a grandma.
+The review should focus on: design, performance.             
+Each review must be 1 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name": "Sofa",
+"review": "The sofa's performance is disappointing, it's not as comfortable as I expected, and the design seems too modern for my taste.",
+"tags": ["Performance", "Design", "Negative"]
+
+"product_name": "Sofa",
+"review": "I love how this sofa performs, it's so comfortable and supportive, but the design could use a bit more simplicity.",
+"tags": ["Performance", "Design", "Positive"]
+
+"product_name": "Sofa",
+"review": "This sofa's design is charming and fits perfectly with my living room, however, it doesn't seem to last long and the performance is lacking.",
+"tags": ["Performance", "Design", "Negative"]
+
+"product_name": "Sofa",
+"review": "It's a joy to sit on this sofa, it's sturdy, comfortable and performs exceptionally well, and I adore its classic design.",
+"tags": ["Performance", "Design", "Positive"]
+
+"product_name": "Sofa",
+"review": "The sofa's performance is subpar, the cushions lose their shape quickly, but I must admit, the design is quite elegant.",
+"tags": ["Performance", "Design", "Negative"]
+
+"product_name": "Sofa",
+"review": "This sofa's performance is outstanding, it's comfortable, supportive, and the design is timeless, I couldn't be happier.",
+"tags": ["Performance", "Design", "Positive"]

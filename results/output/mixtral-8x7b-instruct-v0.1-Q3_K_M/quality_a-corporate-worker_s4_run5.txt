@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Smart TV.
+The review must be written from the perspective of a corporate worker.
+The review should focus on: quality.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name": "Smart TV",
+"review": "I was disappointed with the build quality of this Smart TV. The plastic felt flimsy and cheap. The stand wobbled slightly, raising concerns about its durability. Additionally, I noticed some rough edges along the casing.",
+"tags": ["Quality"]
+
+"product_name": "Smart TV",
+"review": "The Smart TV's quality didn't live up to my expectations. The remote control feels poorly made, with buttons that stick and a cheap, lightweight design. Furthermore, the power cable seems fragile and not very durable.",
+"tags": ["Quality"]
+
+"product_name": "Smart TV",
+"review": "I'm concerned about the poor quality of this Smart TV. The screen has a noticeable backlight bleed, and the audio quality is subpar. Additionally, the remote control frequently disconnects from the TV, affecting the user experience.",
+"tags": ["Quality"]
+
+"product_name": "Smart TV",
+"review": "I'm thrilled with the quality of this Smart TV. The metal casing feels robust, and the display is sharp and vibrant. The remote control has a premium finish, and it's comfortable to hold.",
+"tags": ["Quality"]
+
+"product_name": "Smart TV",
+"review": "The Smart TV's build quality is excellent. The solid construction inspires confidence, and the materials used seem durable and long-lasting. The screen is well-protected, and the stand feels sturdy.",
+"tags": ["Quality"]
+
+"product_name": "Smart TV",
+"review": "I'm impressed by the high-quality display on this Smart TV. The colors are rich, and the contrast ratio is impressive. The audio is crisp and clear, and the overall user experience is fantastic.",
+"tags": ["Quality"]

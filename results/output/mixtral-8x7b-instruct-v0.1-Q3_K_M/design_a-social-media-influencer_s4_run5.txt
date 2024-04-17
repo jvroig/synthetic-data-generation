@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Smart TV.
+The review must be written from the perspective of a social media influencer.
+The review should focus on: design.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ product_name: Smart TV
+review: "I'm disappointed with this Smart TV's design. The bulky stand takes up too much space and the buttons are not intuitive at all. It's a letdown for a device that's supposed to be sleek and modern."
+tags: ["Design", "Non-review"]
+
+product_name: Smart TV
+review: "The Smart TV's design is impressive, minimalist, and modern. I love the slim profile and the simple yet elegant remote control. It's a design that makes a statement."
+tags: ["Design"]
+
+product_name: Smart TV
+review: "The design of this Smart TV is its biggest drawback. The user interface is confusing, and the color options are limited. I was expecting more from a high-end brand."
+tags: ["Design", "Performance"]
+
+product_name: Smart TV
+review: "I am in love with this Smart TV's design. The screen size is perfect, and the stand is sturdy yet subtle. The overall aesthetic is clean and modern, just what I wanted."
+tags: ["Design"]
+
+product_name: Smart TV
+review: "I have to say, I'm not a fan of the design of this Smart TV. The placement of the ports is inconvenient, and the remote control feels cheap."
+tags: ["Design", "Non-review"]
+
+product_name: Smart TV
+review: "The design of this Smart TV is fantastic. It's sleek, modern, and the smart features are seamlessly integrated. I'm really impressed."
+tags: ["Design", "Performance"]

@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Smart TV.
+The review must be written from the perspective of a corporate worker.
+The review should focus on: value.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name": "Smart TV",
+"review": "I was initially hesitant about the value of this Smart TV, but after using it for a while, I must admit, it's worth every penny. The features it offers are impressive and significantly enhance my viewing experience. Even at its price point, I believe it delivers great value compared to other options in the market.",
+"tags": ["Value", "Performance"]
+
+"product_name": "Smart TV",
+"review": "As a corporate worker, I found this Smart TV to be a remarkable value proposition. Despite its price, the quality of the display and sound are exceptional. It's definitely worth considering if you're looking for a high-quality TV.",
+"tags": ["Value", "Quality"]
+
+"product_name": "Smart TV",
+"review": "I was skeptical about the cost of this Smart TV, but having used it for a few weeks, I can confidently say it offers excellent value. The design is sleek and modern, and the performance is top-notch. It's a smart investment for any home.",
+"tags": ["Value", "Design", "Performance"]
+
+"product_name": "Smart TV",
+"review": "I initially thought the price of this Smart TV was too high, but after seeing its capabilities, I realize it's a great value. The performance is outstanding, and the design is modern and stylish. It's a worthy investment.",
+"tags": ["Value", "Performance", "Design"]
+
+"product_name": "Smart TV",
+"review": "This Smart TV is a fantastic value, offering a multitude of features at a reasonable price. The quality of the display is excellent, and the user interface is intuitive and easy to navigate.",
+"tags": ["Value", "Quality", "Design"]
+
+"product_name": "Smart TV",
+"review": "I was surprised by the value this Smart TV offers. Given its price, I expected lower quality, but I was wrong. The performance is impressive, and the design is sleek and modern.",
+"tags": ["Value", "Performance", "Design"]

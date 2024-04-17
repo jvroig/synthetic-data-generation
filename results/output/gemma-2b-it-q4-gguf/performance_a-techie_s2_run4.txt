@@ -1,0 +1,51 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Microwave.
+The review must be written from the perspective of a techie.
+The review should focus on: performance.             
+Each review must be 2 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+{
+  "product_name": "Microwave",
+  "review": "The microwave consistently heats up food unevenly, even on the lowest setting. The heating elements are also incredibly hot, posing a safety risk to the user. I'm amazed this product manages to cost so much considering its subpar performance.",
+  "tags": ["performance", "safety", "value"]
+}
+
+<|im_start|>assistant
+{
+  "product_name": "Microwave",
+  "review": "The microwave is a great product for cooking meals quickly. I love the sleek design and the variety of cooking options available. The included recipe book is excellent! This is the perfect appliance for a busy family.",
+  "tags": ["performance", "value", "design"]
+}
+
+<|im_start|>assistant
+{
+  "product_name": "Microwave",
+  "review": "The microwave is a bit of a disappointment. The heating process is very uneven, and the turntable can be noisy. I also find the design to be quite clunky, which doesn't match the sleek image I saw online.",
+  "tags": ["performance", "noise", "value"]
+}

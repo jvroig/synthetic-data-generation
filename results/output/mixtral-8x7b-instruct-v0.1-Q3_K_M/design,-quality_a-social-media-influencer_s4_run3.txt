@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Screwdriver.
+The review must be written from the perspective of a social media influencer.
+The review should focus on: design, quality.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name":"Screwdriver"
+"review":"I'm disappointed with the design of this screwdriver. The color scheme is unappealing and the grip isn't ergonomic. As for quality, the materials feel cheap and it's already showing signs of wear after a few uses.",
+"tags":["Design", "Quality", "Negative"]
+
+"product_name":"Screwdriver"
+"review":"I had high expectations for this screwdriver due to its branding, but the design falls short. It's not comfortable to hold and the balance is off. Unfortunately, the quality is also questionable. The blade is not aligned properly, making it difficult to use.",
+"tags":["Design", "Quality", "Negative"]
+
+"product_name":"Screwdriver"
+"review":"This screwdriver's design is a letdown. The size is too small for my hands and the color is an eyesore. Moreover, the quality is poor. The metal feels flimsy and I doubt it will last long.",
+"tags":["Design", "Quality", "Negative"]
+
+"product_name":"Screwdriver"
+"review":"I'm thrilled with the design of this screwdriver! The ergonomic grip fits perfectly in my hand and the color scheme is sleek. The quality is also impressive. It's sturdy, well-constructed, and feels durable.",
+"tags":["Design", "Quality", "Positive"]
+
+"product_name":"Screwdriver"
+"review":"This screwdriver has a fantastic design. It's comfortable to hold, has a great balance, and the color is stylish. The quality is top-notch too. It's robust, the blade is sharp, and it works smoothly.",
+"tags":["Design", "Quality", "Positive"]
+
+"product_name":"Screwdriver"
+"review":"I love the design of this screwdriver! The compact size is convenient for my toolbox and the grip is soft yet firm. The quality is excellent, too. It's well-made, the blade is strong, and it performs smoothly.",
+"tags":["Design", "Quality", "Positive"]

@@ -1,0 +1,38 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Microwave.
+The review must be written from the perspective of a techie.
+The review should focus on: performance, quality.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ {"product_name": "Microwave", "review": "The microwave's performance was disappointing. It took forever to heat up my food and often didn't cook it evenly. Additionally, the build quality seemed poor, with flimsy buttons and a door that didn't close properly.", "tags": ["Performance", "Quality", "Negative"]}
+{"product_name": "Microwave", "review": "I was really impressed with the microwave's performance. It heated up my food quickly and evenly, making it a joy to use. The construction was solid, with sturdy buttons and a well-made door.", "tags": ["Performance", "Quality", "Positive"]}
+{"product_name": "Microwave", "review": "The microwave's performance was subpar. It struggled to handle basic tasks, and the poor build quality resulted in frequent breakdowns.", "tags": ["Performance", "Quality", "Negative"]}
+{"product_name": "Microwave", "review": "I was pleasantly surprised by the microwave's performance. It was fast, efficient, and the sturdy construction inspired confidence in its durability.", "tags": ["Performance", "Quality", "Positive"]}
+{"product_name": "Microwave", "review": "The microwave's performance was lackluster, and the shoddy build quality made it unreliable. I expected better from a reputable brand.", "tags": ["Performance", "Quality", "Negative"]}
+{"product_name": "Microwave", "review": "I'm thrilled with the microwave's performance and build quality. It's a reliable workhorse that handles everything I throw at it without a hitch.", "tags": ["Performance", "Quality", "Positive"]}

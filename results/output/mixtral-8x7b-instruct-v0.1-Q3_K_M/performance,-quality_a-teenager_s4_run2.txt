@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Sofa.
+The review must be written from the perspective of a teenager.
+The review should focus on: performance, quality.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ product_name: Sofa
+review: "I bought this sofa thinking it would be sturdy enough for my fort building, but it started falling apart after just a few uses. The material feels flimsy and cheap, not at all what I expected for the price."
+tags: ["Quality", "Performance", "Value", "Negative"]
+
+product_name: Sofa
+review: "This sofa is amazing! It's super comfortable and perfect for lounging around. The build quality seems solid and I love the design."
+tags: ["Quality", "Performance", "Design", "Positive"]
+
+product_name: Sofa
+review: "I've had this sofa for a couple of weeks now and it's already falling apart. The cushions are losing their shape and the fabric is pilling. I'm really disappointed."
+tags: ["Quality", "Performance", "Negative"]
+
+product_name: Sofa
+review: "I was so excited to get this new sofa! It's really comfortable and perfect for gaming or watching movies. The quality seems great and I think it's a great value."
+tags: ["Quality", "Performance", "Value", "Positive"]
+
+product_name: Sofa
+review: "Honestly, I thought this sofa would be better. The construction feels cheap and the materials aren't very durable. I wish I had spent my money elsewhere."
+tags: ["Quality", "Performance", "Negative"]
+
+product_name: Sofa
+review: "I'm in love with my new sofa! It's so comfy and the quality is excellent. I'm really happy with my purchase and would definitely recommend it to others."
+tags: ["Quality", "Performance", "Positive"]

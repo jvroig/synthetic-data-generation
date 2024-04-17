@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Screwdriver.
+The review must be written from the perspective of a corporate worker.
+The review should focus on: design, value.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name": "Screwdriver",
+"review": "I bought this screwdriver for its sleek design, but the price tag is a bit steep for just a simple tool. It's clear they've invested in aesthetics over affordability. The handle is comfortable, yet I can't help but feel it's not worth the cost.",
+"tags": ["design", "value", "negative"]
+
+"product_name": "Screwdriver",
+"review": "As a corporate worker, I was pleasantly surprised by this screwdriver's value. It's affordable, and the design is practical for everyday use. I would recommend it to anyone seeking a balance between cost and functionality.",
+"tags": ["value", "design", "positive"]
+
+"product_name": "Screwdriver",
+"review": "I've used other screwdrivers that were more expensive, yet this one delivers on design without breaking the bank. It's a testament to the fact that good design doesn't always have to come with a high price tag.",
+"tags": ["value", "design", "positive"]
+
+"product_name": "Screwdriver",
+"review": "I regret purchasing this screwdriver; the design is not ergonomic, and the value isn't there. I've had better experiences with more affordable options.",
+"tags": ["value", "design", "negative"]
+
+"product_name": "Screwdriver",
+"review": "The screwdriver's high cost does not reflect its design quality. I've seen better designs at a lower price point. Disappointing.",
+"tags": ["value", "design", "negative"]
+
+"product_name": "Screwdriver",
+"review": "This screwdriver offers a great balance of value and design. The comfortable grip and stylish appearance make it a great addition to my toolkit. Well worth the investment.",
+"tags": ["value", "design", "positive"]

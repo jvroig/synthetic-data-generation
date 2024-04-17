@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Smart TV.
+The review must be written from the perspective of a grandma.
+The review should focus on: none.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ product_name: Smart TV
+review: "I bought this TV for my grandkids to use when they visit. I don't understand all the features, but it seems pretty good. The picture quality is quite sharp and vibrant. Not sure if it's a good value since I don't use it much."
+tags: ["Performance", "Value"]
+
+product_name: Smart TV
+review: "I'm not very tech-savvy, but even I can operate this smart TV. The design is sleek and unobtrusive, which I appreciate. The remote is easy to handle. I haven't explored the performance much, but so far, so good."
+tags: ["Design", "Performance"]
+
+product_name: Smart TV
+review: "My grandson helped me set up the smart TV. The sound is impressive, filling the room clearly. I haven't tried any apps yet, but I'm pleased with the quality."
+tags: ["Performance"]
+
+product_name: Smart TV
+review: "This smart TV was a bit pricey, but I guess you get what you pay for. I don't have much to compare it to, but it seems to work well."
+tags: ["Value"]
+
+product_name: Smart TV
+review: "I don't understand half the things this TV can do, but it looks nice in my living room. The remote is simple to use, which is all I need."
+tags: ["Design"]
+
+product_name: Smart TV
+review: "I got this TV on sale, and I'm happy with the purchase. It's a bit complicated for me, but the picture is clear and bright."
+tags: ["Non-review", "Quality"]

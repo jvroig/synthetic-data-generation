@@ -1,0 +1,69 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Sofa.
+The review must be written from the perspective of a techie.
+The review should focus on: none.             
+Each review must be 2 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name": "Sofa",
+"review": "As a techie, I appreciate the minimalist design of this sofa, but its durability seems questionable with the lightweight materials used.",
+"tags": ["Design", "Quality"]
+
+"product_name": "Sofa",
+"review": "I'm a techie, and I must say, this sofa's performance is top-notch, offering great support and comfort, unlike any other.",
+"tags": ["Performance"]
+
+"product_name": "Sofa",
+"review": "As a tech-savvy individual, the sofa's price seemed reasonable, yet its value is questionable due to the limited warranty coverage.",
+"tags": ["Value"]
+
+"product_name": "Sofa",
+"review": "From a tech enthusiast perspective, the sofa lacks essential ergonomic features that could enhance its user experience.",
+"tags": ["Design"]
+
+"product_name": "Sofa",
+"review": "Being a techie, I am impressed by the sofa's robust construction, ensuring a long-lasting and high-quality product.",
+"tags": ["Quality"]
+
+"product_name": "Sofa",
+"review": "I'm a tech-oriented person, and I can confirm this sofa performs smoothly, providing consistent support and comfort.",
+"tags": ["Performance"]
+
+###
+
+"product_name": "Sofa",
+"review": "As a techie, I believe the sofa's price is too steep considering its limited features and basic design.",
+"tags": ["Value"]
+
+"product_name": "Sofa",
+"review": "I'm a tech-savvy individual, and I can't overlook the sofa's lack of design innovation and appeal.",
+"tags": ["Design"]
+
+"product_name": "Sofa",
+"review": "Being a tech enthusiast, the sofa's subpar quality is evident in the poor choice of materials and hasty construction.",
+"tags": ["Quality"]

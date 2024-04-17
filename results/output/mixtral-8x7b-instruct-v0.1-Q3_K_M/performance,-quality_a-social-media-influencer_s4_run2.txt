@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Sofa.
+The review must be written from the perspective of a social media influencer.
+The review should focus on: performance, quality.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ "product_name": "Sofa",
+"review": "I've got to say, this sofa's performance is a letdown. It's just not comfortable for long periods, and the cushions lose their shape quickly. Such a pity, because the quality of the materials and build is quite good.",
+"tags": ["Performance", "Quality"]
+
+"product_name": "Sofa",
+"review": "I've been using this sofa for a while now, and I must admit, the quality is top-notch. The materials are durable and the build is sturdy. However, its performance in terms of comfort could be better. It's not terrible, but it's not the best I've experienced.",
+"tags": ["Performance", "Quality"]
+
+"product_name": "Sofa",
+"review": "As a social media influencer, I can't overlook the performance of this sofa. It's comfortable and supportive, but the quality leaves something to be desired. The materials seem a bit cheap, and the construction isn't as solid as I'd hoped.",
+"tags": ["Performance", "Quality"]
+
+"product_name": "Sofa",
+"review": "I'm absolutely in love with this sofa! The performance is outstanding - it's comfortable, supportive, and perfect for lounging. Plus, the quality is exceptional. It's clear that a lot of thought and care went into the design and construction.",
+"tags": ["Performance", "Quality"]
+
+"product_name": "Sofa",
+"review": "This sofa is a game-changer! The performance is top-notch - it's comfortable, stylish, and perfect for my home aesthetic. Moreover, the quality is superb. It's sturdy, well-constructed, and the materials are luxurious.",
+"tags": ["Performance", "Quality"]
+
+"product_name": "Sofa",
+"review": "I'm thrilled with this sofa! The performance is fantastic - it's comfortable, supportive, and perfect for long hours of work or play. The quality is equally impressive. It's well-built, with high-quality materials that promise longevity.",
+"tags": ["Performance", "

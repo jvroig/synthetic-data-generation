@@ -1,0 +1,55 @@
+Prompt:
+
+### INSTRUCTIONS ###
+You're tasked with generating synthetic datasets for fine-tuning a language model on customer reviews for a product. Each review should be categorized based on its content, indicating zero, one, or multiple tags/categories:
+
+Quality: The review primarily focuses on craftsmanship, durability, or overall build quality. Look for mentions of materials, construction, defects, or flaws encountered.
+
+Performance: The review emphasizes functionality, efficiency, or how well the product performs its intended tasks. Pay attention to mentions of speed, accuracy, features, and any performance issues experienced.
+
+Value: Reviews that highlight the product's worth relative to its price. Consider references to cost-effectiveness, affordability, comparisons with similar products, and whether the product delivers promised benefits for the price paid.
+
+Design: Reviews discussing aesthetic appeal, ergonomics, user interface, or overall design aspects. Note any compliments or criticisms regarding appearance, ease of use, and user experience design.
+
+Non-review: Reviews indicating the product hasn't been tried or whose content is solely "bought this at sale," or "bought this for my wife" with no additional information or customer sentiment expressed.
+
+A review might receive multiple tags/categories if its content covers multiple aspects of the product experience.
+
+Your task is to generate diverse synthetic datasets adhering to these guidelines, providing nuanced insights into customer feedback on product quality, performance, value, and design.
+
+
+### INPUT ####
+Create three negative and three positive customer reviews for this product: Sofa.
+The review must be written from the perspective of a social media influencer.
+The review should focus on: design.             
+Each review must be 4 sentences long.
+
+### OUTPUT FORMAT ####
+Answer in JSON Lines format, where the first key is "product_name", the second key is "review" and the third key is "tags".
+
+Do not include any other extra information beyond that.
+### LLM ANSWER ###
+Response:
+ product_name: Sofa
+review: "I'm disappointed with the sofa's design. It doesn't match my aesthetic at all. The color is off, and the shape is too traditional for my taste. I was really looking forward to something more modern."
+tags: ["Design", "Negative"]
+
+product_name: Sofa
+review: "The sofa's design is stunning! I love the sleek, minimalist look. It fits perfectly with my interior design style. The color is beautiful, and the shape is so comfortable yet stylish."
+tags: ["Design", "Positive"]
+
+product_name: Sofa
+review: "I'm not a fan of the sofa's design. The pattern is too busy, and it doesn't suit my room's theme. I was hoping for something simpler and more understated."
+tags: ["Design", "Negative"]
+
+product_name: Sofa
+review: "I'm really enjoying the sofa's design. It's so unique and eye-catching. The material feels luxurious, and the detailing is exquisite. I'm getting so many compliments on it!"
+tags: ["Design", "Positive"]
+
+product_name: Sofa
+review: "The sofa's design is a miss for me. The legs are too chunky, and it's not the right scale for my space. I was expecting something more elegant and refined."
+tags: ["Design", "Negative"]
+
+product_name: Sofa
+review: "I'm completely in love with the sofa's design. It's the perfect blend of style and comfort. The curves are so inviting, and the fabric feels so soft. It's a statement piece that elevates my living room."
+tags: ["Design", "Positive"]
